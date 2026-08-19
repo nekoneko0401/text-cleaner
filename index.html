@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テキスト整形・クレンジングツール</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>テキスト整形・クレンジングツール</h1>
+    
+    <!-- オプション選択エリア -->
+    <div class="options-panel">
+      <h3>変換オプション</h3>
+      <div class="options-grid">
+        <label><input type="checkbox" id="optAlphaNum" checked> 英数字を半角に統一</label>
+        <label><input type="checkbox" id="optKana" checked> 半角カタカナを全角に変換</label>
+        <label><input type="checkbox" id="optZip"> 郵便番号にハイフンを自動挿入（7桁数字 → 000-0000）</label>
+        <label><input type="checkbox" id="optSpace" checked> 余計なスペース（全角・連続）を半角1つに縮小</label>
+        <label><input type="checkbox" id="optTrim"> 行頭・行末の空白を除去</label>
+        <label><input type="checkbox" id="optPhoneHyphen"> 電話番号のハイフンを除去</label>
+        <label><input type="checkbox" id="optAddressDash"> 住所のダッシュ・ハイフン記号を「-」に統一</label>
+        <label><input type="checkbox" id="optRemoveCharSpace" checked> 文字間の無駄なスペースを除去（「東 京」→「東京」）</label>
+    　</div>
+    </div>
+
+    <div class="io-area">
+      <div class="field">
+        <label for="inputText">変換前</label>
+        <textarea id="inputText" placeholder="ここに名簿や住所、電話番号などを貼り付け..."></textarea>
+      </div>
+      <div class="field">
+        <label for="outputText">変換後</label>
+        <textarea id="outputText" readonly placeholder="変換結果がここに表示されます"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="cleanBtn" class="btn-primary">整形する</button>
+      <button id="copyBtn" class="btn-secondary">結果をコピー</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
