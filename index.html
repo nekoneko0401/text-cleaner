@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text Cleaner - テキスト整形ツール</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="container">
     <h1>Text Cleaner</h1>
 
-    <!-- オプション選択エリア -->
-    <div class="options-panel">
-      <h3>変換オプション</h3>
-      <div class="options-grid">
-        <label><input type="checkbox" id="optAlphaNum" checked> 英数字を半角に統一</label>
-        
-        <!-- カタカナ変換の選択 -->
-        <div class="radio-group">
-          <label><input type="radio" name="optKanaMode" value="none"> カタカナ変換なし</label>
-          <label><input type="radio" name="optKanaMode" value="toFull" checked> 半角ｶﾀｶﾅ → 全角カタカナ</label>
-          <label><input type="radio" name="optKanaMode" value="toHalf"> 全角カタカナ → 半角ｶﾀｶﾅ</label>
-        </div>
+    <!-- オプション選択エリア（初期選択を「カタカナ変換なし」に変更し、チェックをすべて外す） -->
+    <div class="options-grid">
+      <label><input type="checkbox" id="optAlphaNum"> 英数字を半角に統一</label>
 
-        <label><input type="checkbox" id="optZip"> 郵便番号にハイフン挿入（0000000 → 000-0000）</label>
-        <label><input type="checkbox" id="optPhoneHyphen"> 電話番号のハイフン除去</label>
-        <label><input type="checkbox" id="optAddressDash"> 住所のダッシュ・ハイフン記号を「-」に統一</label>
-        <label><input type="checkbox" id="optRemoveCharSpace" checked> 文字間の無駄なスペース除去</label>
-        <label><input type="checkbox" id="optSpace" checked> 連続スペースを半角1つに縮小</label>
-        <label><input type="checkbox" id="optTrim"> 各行の前後空白を除去</label>
-        <label><input type="checkbox" id="optRemoveLineBreaks"> 改行を全削除して1行に連結</label>
+      <!-- カタカナ変換の選択（デフォルトは「変換なし」に） -->
+      <div class="radio-group">
+        <label><input type="radio" name="optKanaMode" value="none" checked> カタカナ変換なし</label>
+        <label><input type="radio" name="optKanaMode" value="toFull"> 半角ｶﾀｶﾅ → 全角カタカナ</label>
+        <label><input type="radio" name="optKanaMode" value="toHalf"> 全角カタカナ → 半角ｶﾀｶﾅ</label>
       </div>
-    </div>
 
+      <label><input type="checkbox" id="optZip"> 郵便番号にハイフン挿入（0000000 → 000-0000）</label>
+      <label><input type="checkbox" id="optPhoneHyphen"> 電話番号のハイフン除去</label>
+      <label><input type="checkbox" id="optAddressDash"> 住所のダッシュ・ハイフン記号を「-」に統一</label>
+      <label><input type="checkbox" id="optRemoveCharSpace"> 文字間の無駄なスペース除去</label>
+      <label><input type="checkbox" id="optSpace"> 連続スペースを半角1つに縮小</label>
+      <label><input type="checkbox" id="optTrim"> 各行の前後空白を除去</label>
+      <label><input type="checkbox" id="optRemoveLineBreaks"> 改行を全削除して1行に連結</label>
+    </div>
     <!-- CSV取り込みエリア -->
     <div class="file-panel">
       <h3>CSVファイル処理</h3>
@@ -65,4 +63,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
