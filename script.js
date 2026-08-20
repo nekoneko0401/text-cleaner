@@ -54,8 +54,13 @@ function cleanText(text) {
   }
 
   // 文字間のスペース除去（改行を含まない半角・全角スペースのみ除去する修正版）
+  //if (document.getElementById('optRemoveCharSpace').checked) {
+  //  text = text.replace(/([^\s\r\n])[ \t\u3000]+([^\s\r\n])/g, '$1$2');
+  //}
+
+  // 文字間の無駄なスペース除去（半角・全角問わず、改行以外のスペースをすべて削除）
   if (document.getElementById('optRemoveCharSpace').checked) {
-    text = text.replace(/([^\s\r\n])[ \t\u3000]+([^\s\r\n])/g, '$1$2');
+    text = text.replace(/[ \t\u3000]+/g, '');
   }
 
   // 郵便番号ハイフン自動挿入
@@ -102,7 +107,7 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
   output.select();
   navigator.clipboard.writeText(output.value);
-  
+
   const originalBtnText = document.getElementById('copyBtn').innerText;
   document.getElementById('copyBtn').innerText = 'コピーしました！';
   setTimeout(() => {
@@ -127,17 +132,17 @@ document.getElementById('csvFileInput').addEventListener('change', (e) => {
   if (!file) return;
 
   originalFileName = file.name.replace(/\.[^/.]+$/, "") + '_cleaned.csv';
-  
+
   // まずArrayBufferとしてバイナリ読み込み
   const reader = new FileReader();
 
   reader.onload = (event) => {
     const arrayBuffer = event.target.result;
-    
+
     // UTF-8かShift_JISかを判定してテキスト化
     let text = '';
     const utf8Decoder = new TextDecoder('utf-8', { fatal: true });
-    
+
     try {
       // まずUTF-8で試す
       text = utf8Decoder.decode(arrayBuffer);
@@ -148,11 +153,11 @@ document.getElementById('csvFileInput').addEventListener('change', (e) => {
     }
 
     document.getElementById('inputText').value = text;
-    
+
     // 全体整形実行
     processedCsvData = cleanText(text);
     document.getElementById('outputText').value = processedCsvData;
-    
+
     // ダウンロードボタン有効化
     document.getElementById('downloadCsvBtn').disabled = false;
   };
@@ -168,7 +173,7 @@ document.getElementById('downloadCsvBtn').addEventListener('click', () => {
   const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
   const blob = new Blob([bom, processedCsvData], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
-  
+
   const a = document.createElement('a');
   a.href = url;
   a.download = originalFileName;

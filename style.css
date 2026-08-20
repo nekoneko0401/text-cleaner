@@ -1,111 +1,86 @@
-/* 全体基本設定 */
-:root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --danger-color: #ef4444;
-  --danger-hover: #dc2626;
-  --bg-color: #0f172a;
-  --card-bg: #1e293b;
-  --panel-bg: #334155;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-color: #475569;
-  --radius: 12px;
+/* 全体設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  padding: 32px 16px;
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  line-height: 1.5;
-  min-height: 100vh;
-  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #1e293b;
+  color: #f8fafc;
+  line-height: 1.6;
+  padding: 20px;
 }
 
-/* アプリ本体のウィンドウ */
 .container {
-  max-width: 960px;
+  max-width: 900px;
   margin: 0 auto;
-  background: var(--card-bg);
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 24px;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 16px;
+  font-size: 1.8rem;
+  color: #38bdf8;
+  margin-bottom: 8px;
 }
 
-h1::before {
-  content: "✂️";
-  font-size: 1.3rem;
+h3 {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin-bottom: 12px;
 }
 
-/* オプションエリア */
-.options-panel, .file-panel {
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  padding: 20px;
-  border-radius: var(--radius);
-  margin-bottom: 20px;
+/* パネル共通 */
+.options-panel,
+.file-panel {
+  background-color: #0f172a;
+  border-radius: 8px;
+  padding: 16px 20px;
+  border: 1px solid #334155;
 }
 
-.options-panel h3, .file-panel h3 {
-  margin-top: 0;
-  margin-bottom: 14px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #cbd5e1;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
+/* オプションエリア（Gridレイアウト） */
 .options-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 12px;
+  gap: 12px 16px;
+  align-items: start;
 }
 
-.options-grid label, .radio-group label {
-  font-size: 0.9rem;
-  cursor: pointer;
+.options-grid label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-  color: #e2e8f0;
-}
-
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background: rgba(15, 23, 42, 0.4);
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  grid-column: 1 / -1;
+  cursor: pointer;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .options-grid input[type="checkbox"],
-.radio-group input[type="radio"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary-color);
+.options-grid input[type="radio"] {
+  margin-top: 3px;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
-/* CSVパネル */
+/* ラジオボタンエリアのグループ枠 */
+.radio-group {
+  grid-column: 1 / -1;
+  background-color: #1e293b;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* CSV処理エリア */
 .file-inputs {
   display: flex;
   gap: 12px;
@@ -113,139 +88,93 @@ h1::before {
   flex-wrap: wrap;
 }
 
-.file-inputs input[type="file"] {
-  font-size: 0.9rem;
-  color: #e2e8f0;
-}
-
 .file-hint {
-  margin: 8px 0 0 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 8px;
 }
 
-/* テキストエリア（入出力） */
+/* 入出力テキストエリア */
 .io-area {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
-  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .io-area {
+    grid-template-columns: 1fr;
+  }
 }
 
 .field {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .field label {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #cbd5e1;
 }
 
 textarea {
-  height: 260px;
-  padding: 14px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  resize: vertical;
+  width: 100%;
+  height: 250px;
   background-color: #0f172a;
   color: #38bdf8;
-  transition: all 0.2s ease;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-family: monospace;
+  resize: vertical;
 }
 
 textarea:focus {
   outline: none;
   border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
 
-/* アクションボタン */
+/* ボタンデザイン */
 .actions {
-  margin-top: 24px;
   display: flex;
   gap: 12px;
+  justify-content: flex-start;
+  /* flex-end から flex-start に変更 */
 }
 
 button {
-  padding: 14px 28px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 6px;
   border: none;
-  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+  background-color: #0284c7;
+  color: #ffffff;
 }
 
 .btn-secondary {
-  background-color: #475569;
+  background-color: #334155;
   color: #f8fafc;
 }
 
-.btn-secondary:hover:not(:disabled) {
-  background-color: #64748b;
-  transform: translateY(-2px);
-}
-
 .btn-danger {
-  background-color: var(--danger-color);
-  color: white;
-  margin-left: auto; /* 右端に配置 */
-}
-
-.btn-danger:hover:not(:disabled) {
-  background-color: var(--danger-hover);
-  transform: translateY(-2px);
-}
-
-/* スマホ対応 */
-@media (max-width: 768px) {
-  body {
-    padding: 12px 8px;
-  }
-
-  .container {
-    padding: 20px 16px;
-  }
-
-  .io-area {
-    flex-direction: column;
-  }
-
-  textarea {
-    height: 180px;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
-
-  .btn-danger {
-    margin-left: 0;
-  }
-
-  button {
-    width: 100%;
-  }
+  background-color: #ef4444;
+  color: #ffffff;
 }
