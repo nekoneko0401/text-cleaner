@@ -65,7 +65,7 @@ function cleanText(text) {
 
   // 郵便番号ハイフン自動挿入
   if (document.getElementById('optZip').checked) {
-    text = text.replace(/(^|[^\d])(\d{3})(\d{4})([^\d]|$)/g, '$1$2-$3$4');
+    text = text.replace(/(?<!\d)(\d{3})(\d{4})(?!\d)/g, '$1-$2');
   }
 
   // 電話番号ハイフン除去
