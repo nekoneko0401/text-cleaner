@@ -31,16 +31,22 @@
       <label><input type="checkbox" id="optTrim"> 各行の前後空白を除去</label>
       <label><input type="checkbox" id="optSpaceToNewline"> スペース（全角・半角）を改行に変換</label>
 
-      <!-- ★ ここ（.options-grid の一番最後）に追加 ★ -->
-      <div class="radio-group" style="grid-column: 1 / -1;">
-        <label><input type="checkbox" id="optJoinLines"> 改行を1行に連結</label>
-        <span style="font-size:0.9rem; color:#cbd5e1;">（区切り：</span>
-        <label><input type="radio" name="joinDelimiter" value="" checked> なし</label>
-        <label><input type="radio" name="joinDelimiter" value=","> 読点「,」</label>
-        <label><input type="radio" name="joinDelimiter" value="、"> 読点「、」</label>
-        <label><input type="radio" name="joinDelimiter" value=" "> 半角SP</label>
-        <label><input type="radio" name="joinDelimiter" value=" "> 全角SP</label>
-        <span style="font-size:0.9rem; color:#cbd5e1;">）</span>
+      <!-- 改行を1行に連結エリア（2行構成） -->
+      <div class="radio-group"
+        style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+        <div>
+          <label><input type="checkbox" id="optJoinLines"> 改行を1行に連結</label>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-left: 20px;">
+          <span style="font-size:0.9rem; color:#cbd5e1;">区切り文字：</span>
+          <label><input type="radio" name="joinDelimiter" value="" checked> なし</label>
+          <label><input type="radio" name="joinDelimiter" value=","> 読点「,」</label>
+          <label><input type="radio" name="joinDelimiter" value="、"> 読点「、」</label>
+          <label><input type="radio" name="joinDelimiter" value="・"> 中黒「・」</label>
+          <label><input type="radio" name="joinDelimiter" value="："> コロン「：」</label>
+          <label><input type="radio" name="joinDelimiter" value=" "> 半角SP</label>
+          <label><input type="radio" name="joinDelimiter" value=" "> 全角SP</label>
+        </div>
       </div>
     </div> <!-- .options-grid 閉じタグ -->
 
