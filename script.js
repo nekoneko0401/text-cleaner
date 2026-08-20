@@ -53,10 +53,9 @@ function cleanText(text) {
     text = text.replace(fullKanaRegExp, (m) => reverseKanaMap[m]);
   }
 
-  // 文字間のスペース除去
+  // 文字間のスペース除去（改行を含まない半角・全角スペースのみ除去する修正版）
   if (document.getElementById('optRemoveCharSpace').checked) {
-    text = text.replace(/([^\s])\s+([^\s])/g, '$1$2');
-    text = text.replace(/([^\s])\s+([^\s])/g, '$1$2');
+    text = text.replace(/([^\s\r\n])[ \t\u3000]+([^\s\r\n])/g, '$1$2');
   }
 
   // 郵便番号ハイフン自動挿入
@@ -75,9 +74,11 @@ function cleanText(text) {
     text = text.replace(/ +/g, ' ');
   }
 
-  // 各行の前後空白除去
+  // 各行の前後空白除去 (安全な修正版)
   if (document.getElementById('optTrim').checked) {
-    text = text.split('\n').map(line => line.trim()).join('\n');
+    // 改行コード（\nまたは\r\n）より前の空白だけを消す
+    text = text.replace(/^[ \t\u3000]+/gm, ''); // 行頭
+    text = text.replace(/[ \t\u3000]+$/gm, ''); // 行末
   }
 
   // 改行を全削除して1行に連結
@@ -117,7 +118,7 @@ document.getElementById('clearBtn').addEventListener('click', () => {
   document.getElementById('downloadCsvBtn').disabled = true;
 });
 
-// --- CSV取り込み & ダウンロード機能 ---
+// --- CSV取り込み & ダウンロード機能（文字化け対策版） ---
 let processedCsvData = '';
 let originalFileName = 'cleaned_data.csv';
 
@@ -126,24 +127,40 @@ document.getElementById('csvFileInput').addEventListener('change', (e) => {
   if (!file) return;
 
   originalFileName = file.name.replace(/\.[^/.]+$/, "") + '_cleaned.csv';
+  
+  // まずArrayBufferとしてバイナリ読み込み
   const reader = new FileReader();
 
   reader.onload = (event) => {
-    const rawContent = event.target.result;
-    document.getElementById('inputText').value = rawContent;
+    const arrayBuffer = event.target.result;
+    
+    // UTF-8かShift_JISかを判定してテキスト化
+    let text = '';
+    const utf8Decoder = new TextDecoder('utf-8', { fatal: true });
+    
+    try {
+      // まずUTF-8で試す
+      text = utf8Decoder.decode(arrayBuffer);
+    } catch (err) {
+      // UTF-8でエラー（文字化け検知）が出た場合はShift_JIS(ANSI)で読み込む
+      const sjisDecoder = new TextDecoder('shift-jis');
+      text = sjisDecoder.decode(arrayBuffer);
+    }
+
+    document.getElementById('inputText').value = text;
     
     // 全体整形実行
-    processedCsvData = cleanText(rawContent);
+    processedCsvData = cleanText(text);
     document.getElementById('outputText').value = processedCsvData;
     
     // ダウンロードボタン有効化
     document.getElementById('downloadCsvBtn').disabled = false;
   };
 
-  reader.readAsText(file, 'UTF-8');
+  reader.readAsArrayBuffer(file);
 });
 
-// CSVダウンロード実行
+// CSVダウンロード実行（Excelで開いても文字化けしないUTF-8 BOM付き）
 document.getElementById('downloadCsvBtn').addEventListener('click', () => {
   if (!processedCsvData) return;
 
