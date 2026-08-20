@@ -30,8 +30,20 @@
       <label><input type="checkbox" id="optSpace"> 連続スペースを半角1つに縮小</label>
       <label><input type="checkbox" id="optTrim"> 各行の前後空白を除去</label>
       <label><input type="checkbox" id="optSpaceToNewline"> スペース（全角・半角）を改行に変換</label>
-      <label><input type="checkbox" id="optRemoveLineBreaks"> 改行を全削除して1行に連結</label>
-    </div>
+
+      <!-- ★ ここ（.options-grid の一番最後）に追加 ★ -->
+      <div class="radio-group" style="grid-column: 1 / -1;">
+        <label><input type="checkbox" id="optJoinLines"> 改行を1行に連結</label>
+        <span style="font-size:0.9rem; color:#cbd5e1;">（区切り：</span>
+        <label><input type="radio" name="joinDelimiter" value="" checked> なし</label>
+        <label><input type="radio" name="joinDelimiter" value=","> 読点「,」</label>
+        <label><input type="radio" name="joinDelimiter" value="、"> 読点「、」</label>
+        <label><input type="radio" name="joinDelimiter" value=" "> 半角SP</label>
+        <label><input type="radio" name="joinDelimiter" value=" "> 全角SP</label>
+        <span style="font-size:0.9rem; color:#cbd5e1;">）</span>
+      </div>
+    </div> <!-- .options-grid 閉じタグ -->
+
     <!-- CSV取り込みエリア -->
     <div class="file-panel">
       <h3>CSVファイル処理</h3>
@@ -60,7 +72,7 @@
       <button id="copyBtn" class="btn-secondary">コピー</button>
       <button id="clearBtn" class="btn-danger">クリア</button>
     </div>
-  </div>
+  </div> <!-- .container 閉じタグ -->
 
   <script src="script.js"></script>
 </body>

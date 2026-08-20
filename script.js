@@ -91,9 +91,13 @@ function cleanText(text) {
     text = text.replace(/[ \t\u3000]+$/gm, ''); // 行末
   }
 
-  // 改行を全削除して1行に連結
-  if (document.getElementById('optRemoveLineBreaks').checked) {
-    text = text.replace(/\r?\n/g, '');
+  // 改行を1行に連結（選択された区切り文字を間に挟む）
+  if (document.getElementById('optJoinLines').checked) {
+    // 選択されているラジオボタンの値を取得（なし / , / 、 / 半角SP / 全角SP）
+    const delimiter = document.querySelector('input[name="joinDelimiter"]:checked')?.value || '';
+
+    // 空行を除外してから指定の区切り文字で連結
+    text = text.split(/\r?\n/).filter(line => line.trim() !== '').join(delimiter);
   }
 
   return text;
