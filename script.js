@@ -63,6 +63,11 @@ function cleanText(text) {
     text = text.replace(/[ \t\u3000]+/g, '');
   }
 
+  // スペース（全角・半角）を改行に置換（連続するスペースは1つの改行にまとめる）
+  if (document.getElementById('optSpaceToNewline').checked) {
+    text = text.replace(/[ \t\u3000]+/g, '\n');
+  }
+
   // 郵便番号ハイフン自動挿入
   if (document.getElementById('optZip').checked) {
     text = text.replace(/(?<!\d)(\d{3})(\d{4})(?!\d)/g, '$1-$2');
