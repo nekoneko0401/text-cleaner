@@ -2,11 +2,13 @@
 :root {
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
-  --bg-color: #0f172a; /* 濃いダークネイビーでアプリ感を演出 */
-  --card-bg: #1e293b;   /* アプリ本体の背景（暗めのグレー） */
-  --panel-bg: #334155;  /* オプションパネルの背景 */
-  --text-main: #f8fafc;  /* メイン文字色（白） */
-  --text-muted: #94a3b8; /* 補足文字色 */
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --panel-bg: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --border-color: #475569;
   --radius: 12px;
 }
@@ -32,7 +34,6 @@ body {
   border: 1px solid var(--border-color);
 }
 
-/* タイトルエリア（アプリのヘッダー感） */
 h1 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -47,20 +48,20 @@ h1 {
 }
 
 h1::before {
-  content: "✂️"; /* ツールっぽいアイコン */
+  content: "✂️";
   font-size: 1.3rem;
 }
 
 /* オプションエリア */
-.options-panel {
+.options-panel, .file-panel {
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   padding: 20px;
   border-radius: var(--radius);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-.options-panel h3 {
+.options-panel h3, .file-panel h3 {
   margin-top: 0;
   margin-bottom: 14px;
   font-size: 0.85rem;
@@ -76,7 +77,7 @@ h1::before {
   gap: 12px;
 }
 
-.options-grid label {
+.options-grid label, .radio-group label {
   font-size: 0.9rem;
   cursor: pointer;
   display: flex;
@@ -85,17 +86,49 @@ h1::before {
   color: #e2e8f0;
 }
 
-.options-grid input[type="checkbox"] {
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  grid-column: 1 / -1;
+}
+
+.options-grid input[type="checkbox"],
+.radio-group input[type="radio"] {
   width: 16px;
   height: 16px;
   accent-color: var(--primary-color);
   cursor: pointer;
 }
 
+/* CSVパネル */
+.file-inputs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.file-inputs input[type="file"] {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.file-hint {
+  margin: 8px 0 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 /* テキストエリア（入出力） */
 .io-area {
   display: flex;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .field {
@@ -120,8 +153,8 @@ textarea {
   font-size: 0.95rem;
   line-height: 1.6;
   resize: vertical;
-  background-color: #0f172a; /* テキストエリア内を暗くしてコードエディタ風に */
-  color: #38bdf8;             /* 文字色を明るい水色にして視認性アップ */
+  background-color: #0f172a;
+  color: #38bdf8;
   transition: all 0.2s ease;
 }
 
@@ -148,13 +181,18 @@ button {
   transition: all 0.2s ease;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
@@ -165,8 +203,19 @@ button {
   color: #f8fafc;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background-color: #64748b;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+  margin-left: auto; /* 右端に配置 */
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--danger-hover);
   transform: translateY(-2px);
 }
 
@@ -190,6 +239,10 @@ button {
 
   .actions {
     flex-direction: column;
+  }
+
+  .btn-danger {
+    margin-left: 0;
   }
 
   button {
