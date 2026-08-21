@@ -102,6 +102,19 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  body {
+    background-color: #475569;
+    padding: 12px;
+  }
+
+  .container {
+    background-color: #0f172a;
+    border: 1px solid #64748b;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgb(15 23 42 / 35%);
+    padding: 16px;
+  }
+
   .io-area {
     grid-template-columns: 1fr;
   }
